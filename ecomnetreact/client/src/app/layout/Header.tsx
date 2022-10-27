@@ -38,11 +38,9 @@ export default function Header({darkMode, handleThemeChange}: Props){
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
+
         <Box display='flex' alignItems='center'>
-          <Typography variant='h6' component={NavLink} 
-            to='/'
-            end
-            sx={navStyles}>
+          <Typography variant='h6' component={NavLink} to='/' sx={navStyles}>
             RE-STORE
           </Typography>
           <Switch checked={darkMode} onChange={handleThemeChange} />
