@@ -21,7 +21,7 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
         var basket = await _context.Baskets
@@ -34,9 +34,7 @@ namespace API.Controllers
         return MapBasketToDto(basket);
         }
 
-
-
-        [HttpPost]  // api/basket?productId=3&quantity=2
+        [HttpPost]
         public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)
         {
             // get basket || create basket
@@ -102,13 +100,13 @@ namespace API.Controllers
                 BuyerId = basket.BuyerId,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
-                ProductId = item.ProductId,
-                Name = item.Product.Name,
-                Price = item.Product.Price,
-                PictureUrl = item.Product.PictureUrl,
-                Type = item.Product.Type,
-                Brand = item.Product.Brand,
-                Quantity = item.Quantity
+                    ProductId = item.ProductId,
+                    Name = item.Product.Name,
+                    Price = item.Product.Price,
+                    PictureUrl = item.Product.PictureUrl,
+                    Type = item.Product.Type,
+                    Brand = item.Product.Brand,
+                    Quantity = item.Quantity
                 }).ToList()
             };
         }
