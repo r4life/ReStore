@@ -31,8 +31,8 @@ export const fetchProductsAsync = createAsyncThunk<Product[], void, {state: Root
     const params = getAxiosParams(thunkAPI.getState().catalog.productParams);
     try {
       return await agent.Catalog.list(params);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({error: error.data})
     }
   }
 )
@@ -63,7 +63,8 @@ function initParams() {
   return {
     pageNumber: 1,
     pageSize: 6,
-    orderBy: 'name'
+    orderBy: 'name',
+    searchTerm: ''
   }
 }
 
