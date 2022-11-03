@@ -10,7 +10,6 @@ namespace API.Controllers
 {
   public class AccountController : BaseApiController
   {
-    [Authorize]
     private readonly UserManager<User> _userManager;
     private readonly TokenService _tokenService;
 
