@@ -13,9 +13,8 @@ import { useAppDispatch } from '../../app/store/configureStore';
 import { signInUser } from './accountSlice';
 
 export default function Login() {
-  const history = useHistory();
   const dispatch = useAppDispatch();
-
+  const history = useHistory();
 
   const {register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({
     mode: 'onTouched'
