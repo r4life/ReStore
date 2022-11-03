@@ -5,23 +5,25 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Paper } from '@mui/material';
-import agent from '../../app/api/agent';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
+import { useAppDispatch } from '../../app/store/configureStore';
+import { signInUser } from './accountSlice';
 
 export default function Login() {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+
   const {register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({
     mode: 'onTouched'
   })
 
   async function submitForm(data: FieldValues) {
-    try{
-      await agent.Account.login(data);
-    } catch {
-      console.log(errors);
-    }
+    await dispatch(signInUser(data));
+    history.push('/catalog');
   }
 
   return (
