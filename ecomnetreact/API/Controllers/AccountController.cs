@@ -49,7 +49,7 @@ namespace API.Controllers
       {
         Email = user.Email,
         Token = await _tokenService.GenerateToken(user),
-        Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket.MapBasketToDto()
+        Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket?.MapBasketToDto()
       };
     }
 
@@ -80,10 +80,14 @@ namespace API.Controllers
     public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
       var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+      var userBasket = await RetrieveBasket(User.Identity.Name);
+
       return new UserDto 
       {
         Email = user.Email,
-        Token = await _tokenService.GenerateToken(user)
+        Token = await _tokenService.GenerateToken(user),
+        Basket = userBasket?.MapBasketToDto()
       };
     }
 
@@ -101,5 +105,5 @@ namespace API.Controllers
             .ThenInclude(p => p.Product)
             .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
     }
-}
+  }
 }

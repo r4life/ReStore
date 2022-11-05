@@ -89,7 +89,7 @@ namespace API.Controllers
 
         private string GetBuyerId()
         {
-            return User.Identity.Name ?? Request.Cookies["buyerId"];
+            return User.Identity?.Name ?? Request.Cookies["buyerId"];
         }
 
         private Basket CreateBasket()
