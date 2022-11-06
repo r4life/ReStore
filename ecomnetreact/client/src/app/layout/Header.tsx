@@ -52,21 +52,19 @@ export default function Header({darkMode, handleThemeChange}: Props){
           <Switch checked={darkMode} onChange={handleThemeChange} />
         </Box>
 
-        <Box>
-          <List sx={{display: 'flex'}}>
-            {midLinks.map(({title, path}) =>(
-              <ListItem
-                component={NavLink}
-                to={path}
-                key={path}
-                sx={navStyles}
-              >
-                {title.toUpperCase()}  
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-
+        <List sx={{display: 'flex'}}>
+          {midLinks.map(({title, path}) =>(
+            <ListItem
+              component={NavLink}
+              to={path}
+              key={path}
+              sx={navStyles}
+            >
+              {title.toUpperCase()}  
+            </ListItem>
+          ))}
+        </List>
+ 
         <Box display='flex' alignItems='center'>
           <IconButton 
             component={Link} 
@@ -74,9 +72,9 @@ export default function Header({darkMode, handleThemeChange}: Props){
             size='large' 
             sx={{color: 'inherit'}}
           >
-              <Badge badgeContent={itemCount} color='secondary'>
-                <ShoppingCart />
-              </Badge>
+            <Badge badgeContent={itemCount} color='secondary'>
+              <ShoppingCart />
+            </Badge>
           </IconButton>
           { user ? (
             <SignedInMenu />

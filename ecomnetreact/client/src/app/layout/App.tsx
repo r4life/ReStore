@@ -65,14 +65,14 @@ function App() {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/catalog' component={Catalog} />
-          <Route exact path='/catalog/:id' component={ProductDetails} />
-          <Route exact path='/about' component={AboutPage} />
-          <Route exact path='/contact' component={ContactPage} />
-          <Route exact path='/server-error' component={ServerError} />
-          <Route exact path='/basket' component={BasketPage} />
+          <Route path='/catalog/:id' component={ProductDetails} />
+          <Route path='/about' component={AboutPage} />
+          <Route path='/contact' component={ContactPage} />
+          <Route path='/server-error' component={ServerError} />
+          <Route path='/basket' component={BasketPage} />
           <PrivateRoute path='/checkout' component={CheckoutPage} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/register' component={Register} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
 
           <Route component={NotFound} />
         </Switch>

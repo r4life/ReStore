@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -6,16 +7,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link, useHistory } from 'react-router-dom';
-import { Alert, AlertTitle, List, ListItem, ListItemText, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import agent from '../../app/api/agent';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function Register() {
   const history = useHistory();
-  const [validationErrors, setValidationErrors] = useState([])
   const {register, handleSubmit, setError, formState: {isSubmitting, errors, isValid}} = useForm({
     mode: 'all'
   })
@@ -39,10 +38,10 @@ export default function Register() {
       component={Paper}
       maxWidth="sm" 
       sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      p: 4
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        p: 4
     }}>
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
@@ -53,14 +52,14 @@ export default function Register() {
       <Box component="form" 
         onSubmit={handleSubmit((data) => 
           agent.Account.register(data)
-          .then(()=>{
-            toast.success('Registration successful - you can now login');
-            history.push('/login');
-          })
-          .catch(error => handleApiErrors(error)))} 
-        noValidate sx={{ mt: 1 }}>
+            .then(()=>{
+              toast.success('Registration successful - you can now login');
+              history.push('/login');
+            })
+            .catch(error => handleApiErrors(error)))} 
+        noValidate sx={{ mt: 1 }}
+      >
         <TextField
-          required
           fullWidth
           margin="normal"
           label="Username"
@@ -70,7 +69,6 @@ export default function Register() {
           helperText={errors?.username?.message?.toString()}
         />
         <TextField
-          required
           fullWidth
           margin="normal"
           label="Email"
@@ -86,7 +84,6 @@ export default function Register() {
           helperText={errors?.email?.message?.toString()}
         />
         <TextField
-          required
           margin="normal"
           fullWidth
           label="Password"
@@ -101,20 +98,6 @@ export default function Register() {
           error={!!errors.password}
           helperText={errors?.password?.message?.toString()}
         />
-        {validationErrors.length > 0 &&
-          <Alert severity='error'>
-            <AlertTitle>Validation Errors</AlertTitle>
-            <List>
-              {validationErrors.map(error => (
-                <ListItem key={error}>
-                  <ListItemText>
-                    {error}
-                  </ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </Alert>
-        }
         <LoadingButton
           loading={isSubmitting}
           disabled={!isValid}

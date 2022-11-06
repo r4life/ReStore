@@ -13,13 +13,12 @@ namespace API.Services
 {
     public class TokenService
     {
-        private IConfiguration _config;
         private readonly UserManager<User> _userManager;
-
+        private readonly IConfiguration _config;
         public TokenService(UserManager<User> userManager, IConfiguration config)
         {
-            _userManager = userManager;
             _config = config;
+            _userManager = userManager;
         }
 
         public async Task<string> GenerateToken(User user)
@@ -31,6 +30,7 @@ namespace API.Services
             };
 
             var roles = await _userManager.GetRolesAsync(user);
+            
             foreach(var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

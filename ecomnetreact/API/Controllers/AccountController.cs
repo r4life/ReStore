@@ -17,10 +17,7 @@ namespace API.Controllers
     private readonly TokenService _tokenService;
     private readonly StoreContext _context;
 
-    public AccountController(
-      UserManager<User> userManager, 
-      TokenService tokenService,
-      StoreContext context)
+    public AccountController(UserManager<User> userManager, TokenService tokenService,StoreContext context)
     {
       _context = context;
       _userManager = userManager;
@@ -31,6 +28,7 @@ namespace API.Controllers
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
       var user = await _userManager.FindByNameAsync(loginDto.Username);
+      
       if(user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
         return Unauthorized();
       

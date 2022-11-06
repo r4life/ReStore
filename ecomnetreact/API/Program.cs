@@ -29,10 +29,10 @@ namespace API
             {
                 logger.LogError(ex, "Problem migrating data");
             }
-            finally
-            {
-                scope.Dispose();
-            }
+            // finally
+            // {
+            //     scope.Dispose();
+            // }
 
             await host.RunAsync();
         }

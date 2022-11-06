@@ -24,12 +24,10 @@ export default function Login() {
   async function submitForm(data: FieldValues) {
     try {
       await dispatch(signInUser(data));
-      history.push(location.state.from.pathname || '/catalog');
+      history.push(location.state?.from?.pathname || '/catalog');
     } catch (error: any){
       console.log(error);
     }
-    await dispatch(signInUser(data));
-    history.push('/catalog');
   }
 
   return (
@@ -50,10 +48,8 @@ export default function Login() {
       </Typography>
       <Box component="form" onSubmit={handleSubmit(submitForm)} noValidate sx={{ mt: 1 }}>
         <TextField
-          required
           margin="normal"
           fullWidth
-          id="email"
           label="Username"
           autoFocus
           {...register('username', {required: 'Username is required'})}
@@ -61,7 +57,6 @@ export default function Login() {
           helperText={errors?.username?.message?.toString()}
         />
         <TextField
-          required
           margin="normal"
           fullWidth
           label="Password"

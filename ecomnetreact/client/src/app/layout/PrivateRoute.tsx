@@ -12,7 +12,7 @@ export default function PrivateRoute({ component: Component, ...rest}: Props) {
   return (
     <Route
       {...rest}
-      render={(props) => 
+      render={props => 
         user? ( 
           <Component {...props} />
         ) : (
@@ -25,5 +25,5 @@ export default function PrivateRoute({ component: Component, ...rest}: Props) {
         )
       }
     />
-  )
+  );
 }

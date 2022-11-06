@@ -1,7 +1,18 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import agent from "../../app/api/agent";
+import { MetaData } from "../../app/models/pagination";
 import { Product, ProductParams } from "../../app/models/product";
 import { RootState } from "../../app/store/configureStore";
+
+interface CatalogState {
+  productLoaded: boolean;
+  filtersLoaded: boolean;
+  status: string; 
+  brands: string[];
+  types: string[];
+  productParams: ProductParams;
+  metaData: MetaData | null;
+}
 
 const productsAdapter = createEntityAdapter<Product>();
 
@@ -30,17 +41,6 @@ export const fetchProductsAsync = createAsyncThunk<Product[], void, {state: Root
   }
 )
 
-export const fetchFilters = createAsyncThunk(
-  'catalog/fetchFilters',
-  async (_, thunkAPI) => {
-    try {
-      return agent.Catalog.fetchFilters();
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({error: error.data});
-    }
-  }
-)
-
 export const fetchProductAsync = createAsyncThunk<Product, number>(
   'catalog/fetchProductAsync',
   async (productId, thunkAPI) => {
@@ -52,10 +52,21 @@ export const fetchProductAsync = createAsyncThunk<Product, number>(
   }
 )
 
+export const fetchFilters = createAsyncThunk(
+  'catalog/fetchFilters',
+  async (_, thunkAPI) => {
+    try {
+      return agent.Catalog.fetchFilters();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({error: error.data});
+    }
+  }
+)
+
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 6,
+    pageSize: 9,
     orderBy: 'name',
     searchTerm: '',
     brands: [],

@@ -19,7 +19,6 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
   await sleep();
-  console.log(response)
   const pagination = response.headers['pagination'];
   if(pagination){
     response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
@@ -37,7 +36,6 @@ axios.interceptors.response.use(async response => {
             modelStateErrors.push(data.errors[key])
           }
         }
-        toast.error(data.title);
         throw modelStateErrors.flat();
       }
       toast.error(data.title);

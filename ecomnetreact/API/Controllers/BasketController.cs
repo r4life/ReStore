@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -22,11 +23,11 @@ namespace API.Controllers
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
-        var basket = await RetrieveBasket(GetBuyerId());
+            var basket = await RetrieveBasket(GetBuyerId());
 
-        if (basket == null) return NotFound();
+            if (basket == null) return NotFound();
 
-        return basket.MapBasketToDto();
+            return basket.MapBasketToDto();
         }
 
         [HttpPost]
@@ -40,7 +41,7 @@ namespace API.Controllers
             // add item
             var product = await _context.Products.FindAsync(productId);
 
-            if (product == null) return BadRequest(new ProblemDetails{Title = "Product Not Found"});
+            if (product == null) return BadRequest(new ProblemDetails {Title = "Product Not Found"});
 
             basket.AddItem(product, quantity);
 
@@ -85,26 +86,23 @@ namespace API.Controllers
                 .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
         }
-
-
-        private string GetBuyerId()
-        {
-            return User.Identity?.Name ?? Request.Cookies["buyerId"];
-        }
-
         private Basket CreateBasket()
         {
             var buyerId = User.Identity?.Name;
             if (string.IsNullOrEmpty(buyerId))
             {
                 buyerId = Guid.NewGuid().ToString();
-                var cookieOptions = new CookieOptions{IsEssential = true, Expires =  DateTime.Now.AddDays(30)};
+                var cookieOptions = new CookieOptions{ IsEssential = true, Expires =  DateTime.Now.AddDays(30) };
                 Response.Cookies.Append("buyerId", buyerId, cookieOptions);
             }
             
             var basket = new Basket{BuyerId = buyerId};
             _context.Baskets.Add(basket);
             return basket;
+        }
+        private string GetBuyerId()
+        {
+            return User.Identity?.Name ?? Request.Cookies["buyerId"];
         }
     }
 }
