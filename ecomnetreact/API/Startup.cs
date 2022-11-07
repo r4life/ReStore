@@ -17,7 +17,7 @@ using Microsoft.OpenApi.Models;
 
 namespace API
 {
-  public class Startup
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {
