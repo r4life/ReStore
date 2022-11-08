@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Router } from 'react-router-dom';
 
@@ -6,7 +5,6 @@ import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserHistory } from 'history';
-import { StoreProvider } from './app/context/StoreContext';
 
 import { Provider } from 'react-redux';
 import { store } from './app/store/configureStore';
@@ -18,13 +16,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Router history={history}>
-    <React.StrictMode>
-      <StoreProvider>
+
         <Provider store={store}>
           <App />
         </Provider>
-      </StoreProvider>
-    </React.StrictMode>
+
   </Router>
 );
 
