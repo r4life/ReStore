@@ -1,5 +1,4 @@
-export const INCREMENT_COUNTER = "INCREMENT_COUNTER";
-export const DECREMENT_COUNTER = "DECREMENT_COUNTER"
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface CounterState {
     data: number;

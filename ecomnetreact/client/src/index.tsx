@@ -8,10 +8,8 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserHistory } from 'history';
 import { StoreProvider } from './app/context/StoreContext';
 
-import { configureStore } from './app/store/configureStore';
 import { Provider } from 'react-redux';
-
-const store = configureStore();
+import { store } from './app/store/configureStore';
 
 export const history = createBrowserHistory();
 

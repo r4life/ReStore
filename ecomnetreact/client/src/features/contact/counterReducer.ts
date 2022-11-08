@@ -42,5 +42,4 @@ export default function counterReducer(state = initialState, action: any){
         default:
             return state;
     }
-    
 }
