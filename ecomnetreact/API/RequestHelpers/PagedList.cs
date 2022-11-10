@@ -15,7 +15,7 @@ namespace API.RequestHelpers
                 TotalCount = count, 
                 PageSize = pageSize,
                 CurrentPage = pageNumber,
-                TotalPages = (int)Math.Ceiling(count / (double)pageSize)
+                TotalPage = (int)Math.Ceiling(count / (double)pageSize)
             };
             AddRange(items);
         }

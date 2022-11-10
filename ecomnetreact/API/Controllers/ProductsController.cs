@@ -7,7 +7,6 @@ using API.Entities;
 using API.Extensions;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -23,7 +22,7 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts(
-            ProductParams productParams)
+            [FromQuery]ProductParams productParams)
         {
             var query = _context.Products
                 .Sort(productParams.OrderBy)
@@ -34,7 +33,7 @@ namespace API.Controllers
             var products = await PagedList<Product>.ToPagedList(query, 
                 productParams.PageNumber, productParams.PageSize);
 
-            Response.Headers.Add("Pagination", JsonSerializer.Serialize(products.MetaData));
+            Response.AddPaginationHeader(products.MetaData);
 
             return products;
         }
