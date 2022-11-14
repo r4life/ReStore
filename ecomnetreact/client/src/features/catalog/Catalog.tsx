@@ -7,6 +7,7 @@ import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, Paginati
 import ProductSearch from "./ProductSearch";
 import RadioButtonGroup from "../../app/components/RadioButtonGroup";
 import CheckboxButtons from "../../app/components/CheckboxButtons";
+import AppPagination from "../../app/components/AppPagination";
 
 const sortOptions = [
   {value: 'name', label: 'Alphabetical'},
@@ -17,7 +18,7 @@ const sortOptions = [
 export default function Catalog() {
 
   const products = useAppSelector(productSelectors.selectAll);
-  const {productsLoaded, status, filtersLoaded, brands, types, productParams} = useAppSelector(state=>state.catalog);
+  const {productsLoaded, status, filtersLoaded, brands, types, productParams, metaData} = useAppSelector(state=>state.catalog);
   const dispatch = useAppDispatch();
 
   useEffect(()=>{
@@ -28,7 +29,7 @@ export default function Catalog() {
     if(!filtersLoaded) dispatch(fetchFilters());
   }, [dispatch, filtersLoaded])
 
-  if (status.includes('pending')) return <LoadingComponent message='Loading products...' />
+  if (status.includes('pending') || !metaData) return <LoadingComponent message='Loading products...' />
 
   return(
     <Grid container spacing={4}>
@@ -69,17 +70,10 @@ export default function Catalog() {
       </Grid>
       <Grid item xs={3} />
       <Grid item xs={9}>
-        <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <Typography>
-              Displaying 1-6 of 20 items
-            </Typography>
-            <Pagination 
-              color='secondary'
-              size='large'
-              count={10}
-              page={2}
-            />
-        </Box>
+        <AppPagination 
+          metaData={metaData}
+          onPageChange={(page: number) => dispatch(setProductParams({pageNumber: page}))}
+        />
       </Grid>
     </Grid>
   )
