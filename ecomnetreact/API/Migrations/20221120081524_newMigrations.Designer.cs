@@ -6,18 +6,17 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-#nullable disable
-
-namespace API.Data.Migrations
+namespace API.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221115155025_IdentityAdded")]
-    partial class IdentityAdded
+    [Migration("20221120081524_newMigrations")]
+    partial class newMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "5.0.10");
 
             modelBuilder.Entity("API.Entities.Basket", b =>
                 {
@@ -150,7 +149,7 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -176,20 +175,20 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles");
 
                     b.HasData(
                         new
                         {
-                            Id = "2fc82255-a634-44d9-b34b-d1f13fb5760d",
-                            ConcurrencyStamp = "19f89c3b-b0d8-42b7-87c7-bdda94f2f489",
+                            Id = "0e1438c2-111e-4306-bf18-148e0359e3d0",
+                            ConcurrencyStamp = "7a720763-925a-4d9d-9bfc-a401e04b39fe",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "6184cf3e-3dd6-4446-a5f1-8e7ba77574f6",
-                            ConcurrencyStamp = "bd18db17-ff87-40f9-9bf6-87fbdd04f593",
+                            Id = "2f33f8b4-7962-4b34-86ff-6529117c30af",
+                            ConcurrencyStamp = "1f5e9f03-ff2e-4be1-a69e-59ca9e7f9c30",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -215,7 +214,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -238,7 +237,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -260,7 +259,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -275,7 +274,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -294,7 +293,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("API.Entities.BasketItem", b =>

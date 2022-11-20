@@ -1,11 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace API.Data.Migrations
+namespace API.Migrations
 {
-    public partial class IdentityAdded : Migration
+    public partial class newMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +44,38 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Baskets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BuyerId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Price = table.Column<long>(type: "INTEGER", nullable: false),
+                    PictureUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: true),
+                    Brand = table.Column<string>(type: "TEXT", nullable: true),
+                    QuantityInStock = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,15 +184,42 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2fc82255-a634-44d9-b34b-d1f13fb5760d", "19f89c3b-b0d8-42b7-87c7-bdda94f2f489", "Member", "MEMBER" });
+            migrationBuilder.CreateTable(
+                name: "BasketItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    BasketId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BasketItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BasketItems_Baskets_BasketId",
+                        column: x => x.BasketId,
+                        principalTable: "Baskets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BasketItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6184cf3e-3dd6-4446-a5f1-8e7ba77574f6", "bd18db17-ff87-40f9-9bf6-87fbdd04f593", "Admin", "ADMIN" });
+                values: new object[] { "0e1438c2-111e-4306-bf18-148e0359e3d0", "7a720763-925a-4d9d-9bfc-a401e04b39fe", "Member", "MEMBER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "2f33f8b4-7962-4b34-86ff-6529117c30af", "1f5e9f03-ff2e-4be1-a69e-59ca9e7f9c30", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -200,6 +257,16 @@ namespace API.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BasketItems_BasketId",
+                table: "BasketItems",
+                column: "BasketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BasketItems_ProductId",
+                table: "BasketItems",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -220,10 +287,19 @@ namespace API.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BasketItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Baskets");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }
