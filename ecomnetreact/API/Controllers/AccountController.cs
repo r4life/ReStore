@@ -9,7 +9,7 @@ namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public AccountController(UserManager<User> userManager)
         {
@@ -46,7 +46,7 @@ namespace API.Controllers
             }
 
             await _userManager.AddToRoleAsync(user, "Member");
-            
+
             return StatusCode(201);
         }
     }
