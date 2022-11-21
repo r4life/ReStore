@@ -80,7 +80,7 @@ const Basket = {
 const Account = {
   login: (values: any) => requests.post('account/login', values),
   register: (values: any) => requests.post('account/register', values),
-  current: () => requests.get('account/currentuser')
+  currentUser: () => requests.get('account/currentuser')
 }
 
 const agent = {
