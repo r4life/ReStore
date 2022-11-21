@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { request } from "https";
 import { toast } from "react-toastify";
 import { history } from '../..';
 import { PaginatedResponse } from "../models/pagination";
